@@ -1,31 +1,53 @@
 import discord
 import asyncio
 import os
+import random
 from keep_alive import keep_alive
+from discord.ext import commands
 
-client = discord.Client()
 
-@client.event
+bot = commands.Bot(command_prefix='!', case_insensitive=True)
+
+@bot.event
 async def on_ready():
-    print("The bot is ready!")
+  print("Bot is Ready.")
 
-@client.event
-async def on_message(message):
-  author = message.author
-  if message.content.startswith('!test'):
-    print('on_message !test')
-    await test(author, message)
-  
-  if message.content.startswith('!Hello'):
-    print('on_message !hello')
-    await hello(author, message)
+@bot.command()
+async def bob(ctx):
+  await ctx.send('You\'re not Bob!')
 
-async def hello(author, message):
-  await message.channel.send('Hello right back! {0.name}'.format(author))
+@bot.command()
+async def roll(ctx, dice: str):
+    """Rolls a dice in NdN format."""
+    try:
+        rolls, limit = map(int, dice.split('d'))
+    except Exception:
+        await ctx.send('Format has to be in NdN!')
+        return
 
-async def test(author, message):
-  await message.channel.send('I heard you! {0.name}'.format(author))
+    result = ', '.join(str(random.randint(1, limit)) for r in range(rolls))
+    await ctx.send(result)
+
+@bot.command()
+async def ping(ctx):
+    await ctx.send('pong')
+
+@bot.command()
+async def Hello(ctx):
+  await ctx.send('Hello right back! {0.name}'.format(ctx.author))
+
+@bot.command()
+async def test(ctx):
+  await ctx.send('I heard you! {0.name}'.format(ctx.author))
+
+@bot.command(description='For when you wanna settle the score some other way')
+async def choose(ctx, *choices: str):
+    """Chooses between multiple choices."""
+    await ctx.send(random.choice(choices))
+
+
+
 
 keep_alive()
 token = os.environ.get("BOT_SECRET")
-client.run(token)
+bot.run(token)
