@@ -8,13 +8,20 @@ from discord.ext import commands
 
 bot = commands.Bot(command_prefix='!', case_insensitive=True)
 
+taught_comands = []
+
 @bot.event
 async def on_ready():
   print("Bot is Ready.")
 
-@bot.command()
-async def bob(ctx):
-  await ctx.send('You\'re not Bob!')
+@bot.event
+async def on_message(message):
+  if message.author == bot.user:
+    return
+  if "bob" in message.content.lower():
+    await message.delete()
+    await message.channel.send("You're not Bob!")
+  await bot.process_commands(message)
 
 @bot.command()
 async def roll(ctx, dice: str):
@@ -44,6 +51,24 @@ async def test(ctx):
 async def choose(ctx, *choices: str):
     """Chooses between multiple choices."""
     await ctx.send(random.choice(choices))
+
+@bot.command()
+async def ohai(ctx):
+  await ctx.send(":P")
+
+@bot.command()
+async def awoo(ctx):
+  await ctx.send("Weaboo")
+
+#@bot.command(description="Teach me a command!")
+#async def teach(ctx, *args: str):
+#   try:
+#        name, function = map(int, args.split(''))
+#    except Exception:
+#        await ctx.send('Format has to be in Name Function!')
+#        return
+  
+
 
 
 
