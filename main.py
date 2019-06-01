@@ -10,9 +10,14 @@ bot = commands.Bot(command_prefix='!', case_insensitive=True)
 
 taught_comands = []
 
+
 @bot.event
 async def on_ready():
   print("Bot is Ready.")
+
+@bot.event
+async def on_member_join(member):
+    await member.send("Welcome to the server " + str(member) + " !")
 
 @bot.event
 async def on_message(message):
@@ -58,7 +63,7 @@ async def ohai(ctx):
 
 @bot.command()
 async def awoo(ctx):
-  await ctx.send("Weaboo")
+  await ctx.send("*Awoos Softly*")
 
 #@bot.command(description="Teach me a command!")
 #async def teach(ctx, *args: str):
@@ -68,11 +73,6 @@ async def awoo(ctx):
 #        await ctx.send('Format has to be in Name Function!')
 #        return
   
-
-
-
-
-
 keep_alive()
 token = os.environ.get("BOT_SECRET")
 bot.run(token)
