@@ -9,23 +9,42 @@ from discord.ext import commands
 bot = commands.Bot(command_prefix='!', case_insensitive=True)
 
 taught_comands = []
+slurrs = ["nigger", "coon", "nigga", "white trash", "yellow skin", "wetback", "spick", "chink", "beaner", "izzy"]
+
+async def checkSlurrs(message):
+  lower_message = message.content.lower()
+  split = lower_message.split()
+  for i in range(len(slurrs)):
+    for j in range(len(split)):
+      if slurrs[i] == split[j]:
+        return True
+  return
 
 
 @bot.event
 async def on_ready():
-  print("Bot is Ready.")
+  print("ScrapBot is Ready.")
 
 @bot.event
 async def on_member_join(member):
     await member.send("Welcome to the server " + str(member) + " !")
 
+
 @bot.event
 async def on_message(message):
+  slurs = False
+  slurs = await checkSlurrs(message)
+  if slurs:
+    await message.delete()
+    await message.channel.send(str(message.author) +" is a racist!")
+  
+  
   if message.author == bot.user:
     return
-  if "bob" in message.content.lower():
+  
+  if message.content.lower() in slurrs:
     await message.delete()
-    await message.channel.send("You're not Bob!")
+    await message.channel.send(str(message.author) +" is a racist!")
   await bot.process_commands(message)
 
 @bot.command()
@@ -41,12 +60,28 @@ async def roll(ctx, dice: str):
     await ctx.send(result)
 
 @bot.command()
+async def shoutout(ctx, url, message):
+  """Used to send out announcements about streams and/or other things. Context will probably be: !shoutout url title description. Does nothing as of 7/16 """
+
+  flag = true
+  if flag:
+    return
+  else:
+    if url:
+      print(message)
+      string = '@everyone'+ " " + url + " " + message
+      await ctx.send(string)
+    else:
+      string = '@everyone' + ' ' + message
+      await ctx.send(string)
+
+@bot.command()
 async def ping(ctx):
     await ctx.send('pong')
 
 @bot.command()
 async def Hello(ctx):
-  await ctx.send('Hello right back! {0.name}'.format(ctx.author))
+  await ctx.send('Hello right back, {0.name}!'.format(ctx.author))
 
 @bot.command()
 async def test(ctx):
