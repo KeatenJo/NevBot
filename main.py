@@ -69,13 +69,13 @@ async def shoutout(ctx, url, message):
       for guild in bot.guilds:
           for channel in guild.channels:
               if channel.name == "stream-announcements":
-              await channel.send(string)
-    elif url and !message:
+                await channel.send(string)
+    elif url and message is None:
       string = '@everyone'+ " " + url
       for guild in bot.guilds:
           for channel in guild.channels:
               if channel.name == "stream-announcements":
-              await channel.send(string)
+                await channel.send(string)
     else:
       string = '@everyone' + ' ' + message
       await ctx.send(string)
