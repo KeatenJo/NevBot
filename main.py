@@ -60,20 +60,52 @@ async def roll(ctx, dice: str):
     await ctx.send(result)
 
 @bot.command()
+@commands.has_role("Streamer friends")
 async def shoutout(ctx, url, message):
-  """Used to send out announcements about streams and/or other things. Context will probably be: !shoutout url title description. Does nothing as of 7/16 """
+    """Used to send out announcements about community streams. Context: !shoutout < url > < message > ( Both url and message is optional but only one at a time. )"""
 
-  flag = true
-  if flag:
-    return
-  else:
-    if url:
-      print(message)
+    if url and message:
       string = '@everyone'+ " " + url + " " + message
-      await ctx.send(string)
+      for guild in bot.guilds:
+          for channel in guild.channels:
+              if channel.name == "stream-announcements":
+              await channel.send(string)
+    elif url and !message:
+      string = '@everyone'+ " " + url
+      for guild in bot.guilds:
+          for channel in guild.channels:
+              if channel.name == "stream-announcements":
+              await channel.send(string)
     else:
       string = '@everyone' + ' ' + message
       await ctx.send(string)
+
+
+@bot.command()
+@commands.has_role("Admins")
+async def stream(ctx):
+  """Used for announcing Neviations Streams Exclusively."""
+
+  embed = discord.Embed(title="Hey Everyone! I'm Going Live!", description="https://www.twitch.tv/neviation", color=0x00ff00)
+
+  embed.set_footer(text="Come hang out!")
+
+  embed.set_image(url="https://static-cdn.jtvnw.net/jtv_user_pictures/e4661b3573a84f0b-profile_image-70x70.jpeg")
+
+
+  embed.set_thumbnail(url="https://static-cdn.jtvnw.net/jtv_user_pictures/e4661b3573a84f0b-profile_image-70x70.jpeg")
+  for guild in bot.guilds:
+    for channel in guild.channels:
+      if channel.name == 'stream-announcements':
+        #await channel.send('@everyone ', embed=embed)
+        await channel.send("@everyone ", embed=embed)
+
+
+@bot.command()
+async def testStream(ctx):
+  """testing purposes does nothing right now"""
+  return
+  bot.user.setGame("Nev is Streaming!", "https://www.twitch.tv/neviation")
 
 @bot.command()
 async def ping(ctx):
