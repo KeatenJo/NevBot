@@ -1,0 +1,8 @@
+Client Id:
+583509898688593950
+
+Client Secret:
+sCjds02_JU77I0IMo45CH9zkfIxpuu4s
+
+Bot Token:
+NTgzNTA5ODk4Njg4NTkzOTUw.XO9bMQ.QkoP73fwOBFQOVH2EMhWZpx-PCg
