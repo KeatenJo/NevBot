@@ -13,7 +13,6 @@ bot.load_extension("cogs.streamcog")
 bot.load_extension("cogs.generalcog")
 bot.load_extension("cogs.thegamecog")
 
-
 #@bot.command(description="Teach me a command!")
 #async def teach(ctx, *args: str):
 #   try:

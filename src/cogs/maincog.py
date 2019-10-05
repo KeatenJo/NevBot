@@ -4,7 +4,7 @@ import asyncio
 import os
 import random
 
-class MainCog:
+class MainCog(commands.Cog):
     def __init__(self, bot ):
         self.bot = bot
         self.slurrs = ["nigger", "coon", "nigga", "white trash", "yellow skin", "wetback", "spick", "chink", "beaner", "izzy"]

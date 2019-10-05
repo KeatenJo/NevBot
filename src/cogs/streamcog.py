@@ -1,4 +1,10 @@
-class StreamCog:
+from discord.ext import commands
+import discord
+import asyncio
+import os
+import random
+
+class StreamCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -7,13 +13,13 @@ class StreamCog:
     async def shoutout(self, ctx, url, message):
         if url and message:
             string = '@everyone'+ " " + url + " " + message
-            for guild in bot.guilds:
+            for guild in self.bot.guilds:
                 for channel in guild.channels:
                     if channel.name == "community-streams-and-youtube-channels":
                         await channel.send(string)
         elif url and message is None :
             string = '@everyone'+ " " + url
-            for guild in bot.guilds:
+            for guild in self.bot.guilds:
                 for channel in guild.channels:
                     if channel.name == "community-streams-and-youtube-channels":
                         await channel.send(string)
@@ -31,7 +37,7 @@ class StreamCog:
         embed.set_image(url="https://static-cdn.jtvnw.net/jtv_user_pictures/e4661b3573a84f0b-profile_image-70x70.jpeg")
         
         embed.set_thumbnail(url="https://static-cdn.jtvnw.net/jtv_user_pictures/e4661b3573a84f0b-profile_image-70x70.jpeg")
-        for guild in bot.guilds:
+        for guild in self.bot.guilds:
             for channel in guild.channels:
                 if channel.name == 'stream-announcements':
                     await channel.send("@everyone ", embed=embed)

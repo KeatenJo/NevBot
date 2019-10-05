@@ -5,7 +5,7 @@ import os
 import random
 
 
-class TheGameCog:
+class TheGameCog(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -27,8 +27,6 @@ class TheGameCog:
     @commands.command()
     async def stats(self, ctx):
         await ctx.send("I have lost the game " + str(self.times_lost) + " time(s)!")
-
-
 
 
 ############################################# Setup Bot ###################################

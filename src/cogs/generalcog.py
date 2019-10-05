@@ -4,7 +4,7 @@ import asyncio
 import os
 import random
 
-class GeneralCog:
+class GeneralCog(commands.Cog):
     def __init__( self, bot ):
         self.bot = bot
 
@@ -28,7 +28,7 @@ class GeneralCog:
         await ctx.send('Hello right back, {0.name}!'.format(ctx.author))
 
     @commands.command()
-    async def test(ctx):
+    async def test(self, ctx):
         await ctx.send('I heard you! {0.name}'.format(ctx.author))
 
     @commands.command(description='For when you wanna settle the score some other way')
