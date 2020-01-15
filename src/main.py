@@ -4,6 +4,9 @@ import os
 import random
 from keep_alive import keep_alive
 from discord.ext import commands
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 bot = commands.Bot(command_prefix='!', case_insensitive=True)
@@ -23,4 +26,7 @@ bot.load_extension("cogs.thegamecog")
   
 keep_alive()
 token = os.environ.get("BOT_SECRET")
+print(token)
 bot.run(token)
+
+
