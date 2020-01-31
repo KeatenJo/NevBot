@@ -7,10 +7,10 @@ import random
 class MainCog(commands.Cog):
     def __init__(self, bot ):
         self.bot = bot
-        self.slurrs = ["nigger", "coon", "nigga", "white trash", "yellow skin", "wetback", "spick", "chink", "beaner", "izzy"]
         self.message_cache = []
         self.message_count = 0
         self.same_message_count = 0
+        self.checkword == ""
 
 
     async def on_ready(self):
@@ -29,8 +29,8 @@ class MainCog(commands.Cog):
         
         checkword = self.message_cache[0]
         sameword = 0
-        for i in range(len(self.message_cache)):
-            if(checkword.content == self.message_cache[i].content):
+        for i in range(len(self.message_cache)-1):
+            if(checkword.content == self.message_cache[i+1].content):
                 sameword += 1
             else:
                 sameword = 0
