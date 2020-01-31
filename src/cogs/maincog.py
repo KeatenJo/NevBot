@@ -10,7 +10,6 @@ class MainCog(commands.Cog):
         self.message_cache = []
         self.message_count = 0
         self.same_message_count = 0
-        self.checkword == ""
 
 
     async def on_ready(self):
@@ -18,28 +17,33 @@ class MainCog(commands.Cog):
 
     async def on_member_join(self, member):
         await member.send("Welcome to the server " + str(member) + " !")
-    
-    async def on_message(self, message):
-        if(self.message_count > 20 ):
-            self.message_count = 0 
-            self.message_cache[self.message_count] = message
-        else:
-            self.message_cache[self.message_count] = message
-            self.message_count += 1
-        
-        checkword = self.message_cache[0]
-        sameword = 0
-        for i in range(len(self.message_cache)-1):
-            if(checkword.content == self.message_cache[i+1].content):
-                sameword += 1
-            else:
-                sameword = 0
-                checkword = self.message_cache[i]
 
-            if(sameword == 3):
-                await message.channel.send(checkword.content)
-        if(sameword == 2):
+    @commands.Cog.listener() 
+    async def on_message(self, message):
+
+        if message.author == self.bot:
+            return
+        
+        if(self.message_count > 10 ):
+            self.message_count = 0 
+
+        self.message_cache.insert(self.message_count, message)
+        self.message_count += 1
+        
+        checkword = self.message_cache[self.message_count-1]
+        jinx = False
+        if(self.message_count == 1 and len(self.message_cache) >= self.message_count  ):
+            if(self.message_cache[len(self.message_cache)-1].content == checkword.content):
+                jinx = True
+        else:
+            if(self.message_cache[self.message_count-1].content == self.message_cache[self.message_count-2].content):
+                jinx = True
+
+        if(jinx):
             await message.channel.send("Jinx!")
+
+
+        
 
 
 
